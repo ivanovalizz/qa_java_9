@@ -13,6 +13,14 @@ public class RadioTest {
         Assertions.assertEquals(9, radio.getMaxStation());
         Assertions.assertEquals(0, radio.getCurrentStation());
     }
+
+    public void shouldCompareCurrentMinMaxStationWithoutSize() {
+        Radio radio = new Radio();
+
+        Assertions.assertEquals(0, radio.getMinStation());
+        Assertions.assertEquals(9, radio.getMaxStation());
+        Assertions.assertEquals(0, radio.getCurrentStation());
+    }
     @Test //Тестирует установку значения вручную
     public void shouldSetStation() {
         Radio radio = new Radio(10);
@@ -393,4 +401,192 @@ public class RadioTest {
 
         Assertions.assertEquals(expected, actual);
     }
+
+// Тесты с использованием внутреннего состояния полей
+
+    @Test //Тестирует установку значения вручную
+    public void shouldSetStationWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(5);
+
+        int expected = 5;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует установку минимального значения
+    public void shouldSetStationMinWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(radio.getMinStation());
+
+        int expected = 0;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует установку максимального значения
+    public void shouldSetStationMaxWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(radio.getMaxStation());
+
+        int expected = 9;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует невозможность установки ниже минимального значения
+    public void shouldNotSetStationBelowMinWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(-1);
+
+        int expected = 0;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует невозможность установки выше максимального значения
+    public void shouldNotSetStationAboveMaxWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(10);
+
+        int expected = 0;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение следующего значения
+    public void shouldSetToNextStationWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(5);
+
+        radio.setToNextStation();
+
+        int expected = 6;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение следующего значения для минимального значения
+    public void shouldSetToNextStationForMinWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(radio.getMinStation());
+
+        radio.setToNextStation();
+
+        int expected = 1;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение следующего значения для максимального значения
+    public void shouldSetToNextStationForMaxWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(radio.getMaxStation());
+
+        radio.setToNextStation();
+
+        int expected = 0;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение следующего значения для значения выше максимума
+    public void shouldSetToNextStationAboveMaxWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(10);
+
+        radio.setToNextStation();
+
+        int expected = 1;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение следующего значения для значения ниже минимума
+    public void shouldSetToNextStationBelowMinWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(-1);
+
+        radio.setToNextStation();
+
+        int expected = 1;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение предыдущего значения
+    public void shouldSetToPrevStationWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(3);
+
+        radio.setToPrevStation();
+
+        int expected = 2;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение предыдущего значения для минимального значения
+    public void shouldSetToPrevStationForMinWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(radio.getMinStation());
+
+        radio.setToPrevStation();
+
+        int expected = 9;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение предыдущего значения для максимального значения
+    public void shouldSetToPrevStationForMaxWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(radio.getMaxStation());
+
+        radio.setToPrevStation();
+
+        int expected = 8;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение предыдущего значения для значения ниже минимума
+    public void shouldSetToPrevStationBelowMinWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(-1);
+
+        radio.setToPrevStation();
+
+        int expected = 9;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test //Тестирует переключение предыдущего значения для значения выше максимума
+    public void shouldSetToPrevStationAfterMaxWithoutSize() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(10);
+
+        radio.setToPrevStation();
+
+        int expected = 9;
+        int actual = radio.getCurrentStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 }
